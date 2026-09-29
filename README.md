@@ -40,24 +40,12 @@ The LDS-02 (LD08) lidar's motor spins whenever it has power. Its driver ([`ld08_
 3. Reboot to test: `sudo reboot`
 
 ### Optional: test before installing
-
-
+```
 sudo apt install -y uhubctl
 sudo uhubctl -l 1-1 -a off && sudo uhubctl -l 2 -a off   # lidar should stop
 sudo uhubctl -l 1-1 -a on  && sudo uhubctl -l 2 -a on    # lidar should restart
 ```
 Your SSH connection stays up: on the Pi 4, Ethernet and Wi-Fi don't go through these USB ports.
-
-## Daily use
-
-```bash
-ssh <user>@<robot-ip>
-sudo lidar on
-ros2 launch turtlebot3_bringup robot.launch.py
-
-# when finished: Ctrl+C to stop bringup, then
-sudo lidar off
-```
 
 ## What to expect at boot
 

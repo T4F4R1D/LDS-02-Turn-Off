@@ -49,7 +49,7 @@ Your SSH connection stays up: on the Pi 4, Ethernet and Wi-Fi don't go through t
 
 ## What to expect at boot
 
-The Pi's firmware turns USB power on during startup, so the lidar **spins briefly at every boot** until the service switches it off. On our Pi 4 this took about **39 seconds** from power-on, down from 1 min 14 s when the service ran at the end of startup.
+The Pi's firmware turns USB power on during startup, so the lidar spins briefly at every boot until the service switches it off. On our Pi 4 this took about **39 seconds** from power-on, down from 1 min 14 s when the service ran at the end of startup.
 
 Eliminating that spin completely requires hardware: a relay or MOSFET on the lidar's USB 5V line, controlled by a Pi GPIO pin and open by default.
 
@@ -62,18 +62,5 @@ Eliminating that spin completely requires hardware: a relay or MOSFET on the lid
 
 ## Side effects
 
-- **Every** USB device on the Pi (camera, keyboard, etc.) stays off until `sudo lidar on`.
-- On a shared lab robot, let others know the lidar and OpenCR start powered off.
+- Every USB device on the Pi (camera, keyboard, etc.) stays off until `sudo lidar on`.
 
-## Uninstall
-
-```bash
-sudo systemctl disable lidar-off.service
-sudo rm /etc/systemd/system/lidar-off.service /usr/local/bin/lidar
-sudo systemctl daemon-reload
-```
-
-## Tested on
-
-- TurtleBot3 with LDS-02 lidar
-- Raspberry Pi 4 Model B Rev 1.5

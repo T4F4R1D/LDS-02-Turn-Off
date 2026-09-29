@@ -41,8 +41,7 @@ The LDS-02 (LD08) lidar's motor spins whenever it has power. Its driver ([`ld08_
 
 ### Optional: test before installing
 
-Make sure bringup isn't running (`pgrep -af "turtlebot3|ld08"` prints nothing), then:
-```bash
+
 sudo apt install -y uhubctl
 sudo uhubctl -l 1-1 -a off && sudo uhubctl -l 2 -a off   # lidar should stop
 sudo uhubctl -l 1-1 -a on  && sudo uhubctl -l 2 -a on    # lidar should restart

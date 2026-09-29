@@ -53,13 +53,6 @@ The Pi's firmware turns USB power on during startup, so the lidar spins briefly 
 
 Eliminating that spin completely requires hardware: a relay or MOSFET on the lidar's USB 5V line, controlled by a Pi GPIO pin and open by default.
 
-## Troubleshooting
-
-- **Check the service ran:** `systemctl status lidar-off.service --no-pager` should show `USB power off: lidar stopped`.
-- **Lidar spins again after the service ran:** run `sudo uhubctl` and check the port state. The `-r 10` repeat and the 3-second `sleep` in the service are there to prevent this.
-- **`lidar off` says bringup is running:** stop bringup first. If something starts bringup automatically at boot, find it with `systemctl list-unit-files | grep -i turtle` and `crontab -l`.
-- **See what slows boot:** `systemd-analyze` and `systemd-analyze blame | head -10`.
-
 ## Side effects
 
 - Every USB device on the Pi (camera, keyboard, etc.) stays off until `sudo lidar on`.

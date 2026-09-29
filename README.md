@@ -1,6 +1,6 @@
 # TurtleBot3 Lidar Power Control (LDS-02, Raspberry Pi 4)
 
-Keep a TurtleBot3's LDS-02 lidar **completely powered off** after the robot boots, and turn it on with one command over SSH.
+Keep a TurtleBot3's LDS-02 lidar completely powered off after the robot boots, and turn it on with one command over SSH.
 
 ## The problem
 

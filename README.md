@@ -10,11 +10,6 @@ The LDS-02 (LD08) lidar's motor spins whenever it has power. Its driver ([`ld08_
 
 ## How it works
 
-```
-Raspberry Pi 4 ──USB──> OpenCR (wheels, IMU)          /dev/ttyACM0
-               ──USB──> USB adapter board ──> LDS-02  /dev/ttyUSB0 (/dev/tb3_lidar)
-```
-
 - The lidar is powered from the Pi's USB port through its adapter board.
 - [`uhubctl`](https://github.com/mvp/uhubctl) switches the Pi's USB power off and on.
 - The Pi 4 **cannot switch one port at a time**: all four ports go off together. That also disconnects the OpenCR, so USB power is only switched while bringup is **not** running.

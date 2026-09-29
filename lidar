@@ -1,0 +1,33 @@
+#!/bin/bash
+# lidar on|off
+# Switches Raspberry Pi 4 USB power, which powers the LDS-02 lidar (and the OpenCR).
+# The Pi 4 cannot switch a single port: hubs 1-1 (USB 2) and 2 (USB 3) are switched together.
+
+case "$1" in
+  off)
+    # Cutting USB power also disconnects the OpenCR, so never do it while bringup is running.
+    if pgrep -f "turtlebot3_ros|ld08_driver" > /dev/null; then
+      echo "Bringup is running. Stop it first (Ctrl+C), then run: sudo lidar off"
+      exit 1
+    fi
+    # -r 10 repeats the command so the ports don't get switched back on
+    uhubctl -l 1-1 -a off -r 10 > /dev/null
+    uhubctl -l 2   -a off -r 10 > /dev/null
+    echo "USB power off: lidar stopped" ;;
+  on)
+    uhubctl -l 1-1 -a on > /dev/null
+    uhubctl -l 2   -a on > /dev/null
+    # Wait for the lidar (ttyUSB0) and OpenCR (ttyACM0) to reconnect
+    for i in $(seq 1 15); do
+      if [ -e /dev/ttyUSB0 ] && [ -e /dev/ttyACM0 ]; then
+        echo "Lidar and OpenCR ready"
+        exit 0
+      fi
+      sleep 1
+    done
+    echo "Timed out waiting for lidar/OpenCR"
+    exit 1 ;;
+  *)
+    echo "Usage: sudo lidar on|off"
+    exit 1 ;;
+esac

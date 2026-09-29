@@ -1,0 +1,14 @@
+[Unit]
+Description=Keep lidar powered off at boot
+# Run as soon as the lidar's USB adapter appears, not at the end of startup
+After=dev-tb3_lidar.device
+Wants=dev-tb3_lidar.device
+
+[Service]
+Type=oneshot
+# Short pause so USB setup finishes and the ports stay off
+ExecStartPre=/bin/sleep 3
+ExecStart=/usr/local/bin/lidar off
+
+[Install]
+WantedBy=multi-user.target
